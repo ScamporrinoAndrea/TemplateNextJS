@@ -1,4 +1,13 @@
-const Navbar = () => {
+import Link from "next/link"
+import { Button } from "../ui/button"
+import UserMenu from "./user-menu"
+
+
+interface NavbarProps {
+    isLoggedIn: boolean
+}
+
+const Navbar = ({ isLoggedIn }: NavbarProps) => {
     return (
         <div className="bg-white">
             <div className="flex max-w-7xl mx-auto p-8 items-center">
@@ -6,7 +15,13 @@ const Navbar = () => {
                     logo
                 </div>
                 <div>
-                    login
+                    {isLoggedIn ? (
+                        <UserMenu />
+                    ) : (
+                        <Button variant="outline" asChild>
+                            <Link href="/login">Login</Link>
+                        </Button>
+                    )}
                 </div>
             </div>
         </div>
