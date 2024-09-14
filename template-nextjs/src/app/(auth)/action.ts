@@ -33,8 +33,10 @@ export const registerAction = async (
 };
 
 
-export const loginAction = async (formData: FormData) => {
-  "use server";
+export const loginAction = async (
+  prevState: FormState,
+  formData: FormData
+) => {
   const supabaseClient = createClient();
 
   const email = formData.get("email") as string;
@@ -46,8 +48,7 @@ export const loginAction = async (formData: FormData) => {
   });
 
   if (error) {
-    console.log(error.message);
-    return;
+    return { message: "", error: error.message };
   }
 
   redirect("/");

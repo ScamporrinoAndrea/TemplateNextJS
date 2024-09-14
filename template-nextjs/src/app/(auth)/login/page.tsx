@@ -1,8 +1,17 @@
-import { FormButton } from "@/components/ui/form-button";
-import { loginAction } from "../action";
-import Link from "next/link";
+"use client";
 
-export default async function Login() {
+import { FormButton } from "@/components/ui/form-button";
+import { FormState, loginAction } from "../action";
+import Link from "next/link";
+import { useFormState } from "react-dom";
+
+const initialState: FormState = {
+  message: "",
+};
+
+export default function Login() {
+
+  const [state, formAction] = useFormState(loginAction, initialState);
   return (
     <div className="bg-white dark:bg-gray-900 shadow-md rounded-lg px-8 py-6 max-w-md md:min-w-96">
       <Link href="/">
@@ -11,7 +20,7 @@ export default async function Login() {
       <h1 className="text-2xl font-bold text-center mb-4 dark:text-gray-200 py-8">
         Welcome Back!
       </h1>
-      <form action={loginAction}>
+      <form action={formAction}>
         <div className="mb-4">
           <label
             htmlFor="email"
@@ -54,6 +63,8 @@ export default async function Login() {
           </a>
         </div>
         <FormButton text="Login" />
+        <div className="text-green-700">{state.message}</div>
+        <div className="text-red-700">{state.error}</div>
       </form>
     </div>
   );
